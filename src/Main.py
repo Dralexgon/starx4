@@ -130,4 +130,4 @@ async def on_message(message):
     await client.process_commands(message)
 
 #read token from file, use your own token
-client.run(open("../../token.txt", "r").read())
+client.run(open(r"../token.txt", "r").read())
