@@ -28,7 +28,9 @@ async def help(ctx):
 
 def hasPermission(ctx):
     #perms administrator or manage_nicknames or owner or has role "maitre de toutou"
-    return ctx.author.permissions_in(ctx.channel).administrator or ctx.author.permissions_in(ctx.channel).manage_nicknames or ctx.author == ctx.guild.owner or discord.utils.get(ctx.author.roles, name="maitre de toutou") or ctx.author.name == "predat0ria"
+    #return ctx.author.permissions_in(ctx.channel).administrator or ctx.author.permissions_in(ctx.channel).manage_nicknames or ctx.author == ctx.guild.owner or discord.utils.get(ctx.author.roles, name="maitre de toutou") or ctx.author.name == "predat0ria"
+    return ctx.author.guild_permissions.administrator or ctx.author.guild_permissions.manage_nicknames or ctx.author == ctx.guild.owner or discord.utils.get(ctx.author.roles, name="maitre de toutou") or ctx.author.name == "predat0ria"
+    #return True
 
 @client.command(name="laisse", help="Change le pseudo de la cible utilisateur en @🦮user_(👑@monpseudo) exemple: @🦮Open_(👑ImperatricePredatoria) et la cible a un rôle spécial \"propriété de ImperatricePredatoria\".")
 async def laisse(ctx, user: discord.Member):
@@ -95,7 +97,7 @@ async def laisse_remove(ctx, user: discord.Member = None):
                 await ctx.send(embed=discord.Embed(colour = discord.Colour.blue(), description = f"{target.mention} n'est plus votre toutou."))
 
             #he is not the owner of the target and he have the permission to remove the role
-            else: 
+            else:
                 if not hasPermission(ctx):
                     await ctx.send(embed=discord.Embed(colour = discord.Colour.red(), description = f"Vous n'avez pas la permission de retirer le rôle de {target.mention}."))
                     return
@@ -130,4 +132,4 @@ async def on_message(message):
     await client.process_commands(message)
 
 #read token from file, use your own token
-client.run(open(r"../token.txt", "r").read())
+client.run(open(r"../.env", "r").read())
